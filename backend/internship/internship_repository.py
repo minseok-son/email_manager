@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from models.internship import Internship
-from schemas.internship_schema import InternshipInput, InternshipOutput
+from internship.internship_model import Internship
+from internship.internship_schema import InternshipInput, InternshipOutput
 from typing import List, Optional, Type
 
 class InternshipRepository:

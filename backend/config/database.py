@@ -2,11 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 import os
 
-os.chdir(os.path.join(os.path.dirname(__file__), '..'))
-load_dotenv()
+dotenv_path = find_dotenv()
+load_dotenv(dotenv_path)
 
 URL_DATABASE = os.environ['URL_DATABASE']
 

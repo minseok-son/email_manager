@@ -1,8 +1,8 @@
-from repositories.internship_repository import InternshipRepository
-from schemas.internship_schema import InternshipInput, InternshipOutput
+from internship.internship_repository import InternshipRepository
+from internship.internship_schema import InternshipInput, InternshipOutput
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from typing import List, Optional
+from typing import List
 
 class InternshipService:
     def __init__(self, session: Session):

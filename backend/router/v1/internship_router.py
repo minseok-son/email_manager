@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from config.database import get_db
-from schemas.internship_schema import InternshipInput, InternshipOutput
-from services.internship_service import InternshipService
+from internship.internship_schema import InternshipInput, InternshipOutput
+from internship.internship_service import InternshipService
 from typing import List
 
 router = APIRouter(

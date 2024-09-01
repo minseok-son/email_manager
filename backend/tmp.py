@@ -3,7 +3,6 @@ from typing import Optional, Annotated
 from uuid import UUID, uuid4
 from pydantic import BaseModel
 import models
-from database import engine, SessionLocal, Base
 from sqlalchemy.orm import Session
 
 
