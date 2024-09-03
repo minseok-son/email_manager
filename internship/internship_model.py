@@ -5,5 +5,5 @@ class Internship(Base):
     __tablename__ = "internships"
 
     id = Column(Integer, primary_key=True)
-    company = Column(String, index=True, unique=True, nullable=False)
+    company = Column(String, unique=True, nullable=False)
     stage = Column(Integer, nullable=False)

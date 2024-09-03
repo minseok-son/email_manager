@@ -25,7 +25,7 @@ def update_internship(data: InternshipInput, session: Session = Depends(get_db))
     _service = InternshipService(session)
     return _service.update_internship(data)
 
-@router.delete("/{company_name}", status_code=204)
-def delete_internship(company_name: str, session: Session = Depends(get_db)):
+@router.delete("/{id}", status_code=204)
+def delete_internship(id: int, session: Session = Depends(get_db)):
     _service = InternshipService(session)
-    return _service.delete_internship_by_name(company_name)
+    return _service.delete_internship_by_id(id)
