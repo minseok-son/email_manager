@@ -1,6 +1,6 @@
 from emails.email_repository import EmailRepository
 from emails.email_schema import EmailInput, EmailOutput
-from internship.internship_service import InternshipService
+from internships.internship_service import InternshipService
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from typing import List

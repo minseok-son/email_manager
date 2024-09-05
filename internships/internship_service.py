@@ -1,5 +1,5 @@
-from internship.internship_repository import InternshipRepository
-from internship.internship_schema import InternshipInput, InternshipOutput
+from internships.internship_repository import InternshipRepository
+from internships.internship_schema import InternshipInput, InternshipOutput
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from typing import List

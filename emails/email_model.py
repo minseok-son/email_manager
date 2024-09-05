@@ -6,4 +6,5 @@ class Email(Base):
 
     id = Column(Integer, primary_key=True)
     url = Column(String, nullable=False)
+    confidence = Column(Integer)
     internship_id = Column(Integer, ForeignKey('internships.id'))

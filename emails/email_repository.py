@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from emails.email_model import Email
 from emails.email_schema import EmailInput, EmailOutput
-from internship.internship_model import Internship
+from internships.internship_model import Internship
 from typing import List, Optional, Type
 
 class EmailRepository:
