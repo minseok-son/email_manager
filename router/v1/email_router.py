@@ -1,9 +1,12 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from sqlalchemy.orm import Session
 from config.database import get_db
 from emails.email_schema import EmailInput, EmailOutput
 from emails.email_service import EmailService
 from typing import List
+import logging
+
+logger = logging.getLogger()
 
 router = APIRouter(
     prefix="/email",
@@ -20,6 +23,11 @@ def get_emails_by_company(company: str, session: Session = Depends(get_db)):
     _service = EmailService(session)
     return _service.get_emails_by_company(company)
 
+@router.get("/latest-email-date/", status_code=200)
+def get_latest_email_date(session: Session = Depends(get_db)):
+    _service = EmailService(session)
+    return _service.get_latest_email_date()
+    
 @router.delete("/{id}", status_code=204)
 def delete_email(id: int, session: Session = Depends(get_db)):
     _service = EmailService(session)
