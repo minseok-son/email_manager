@@ -73,7 +73,7 @@ def filter_by_body(uids: List[bytes]) -> dict[list]:
     mail.login(os.environ['EMAIL'], os.environ['PASSWORD'])
     mail.select("INBOX")
 
-    prompt_message = "From these messages extract company and stage (Applied, Interview, Accepted, Rejected) from internship-related email. Additionally indicate the confidence level of the evaluation from 1-5. Format response as: Company: _______, Stage: _______, Confidence: _____, URL: ______ and nothing else. If the body of the email indicates that this person did not apply to the company, then return N/A. "
+    prompt_message = "From these messages extract company and stage (Applied, Interview, Accepted, Rejected) from internship-related email. Additionally indicate the confidence level of the evaluation from 1-5. Format response as: Company: _______, Stage: _______, Confidence: _____, URL: ______, Timestamp: _______ and nothing else. If the body of the email indicates that this person did not apply to the company, then return N/A. "
 
     num_body_filtered = 0
     for uid in uids:
