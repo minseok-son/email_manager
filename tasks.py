@@ -57,7 +57,7 @@ def filter_by_subject() -> List[str]:
         prompt_message += "Id: " + str(uid) + " Subject: " + str(subject) + "\n"
     
     mail.logout()
-    print(f"Filtered by subject: {num_subject_filtered} emails")
+    print(f"Retrieving by subject: {num_subject_filtered} emails")
 
     genai.configure(api_key=os.environ['GEMINI_API_KEY'])
     model = genai.GenerativeModel('gemini-1.5-flash')
@@ -105,7 +105,7 @@ def filter_by_body(uids: List[bytes]) -> dict[list]:
         prompt_message += body + f" URL: {url}, Timestamp: {timestamp}" + "\n\n"
     
     mail.logout()
-    print(f"Filtered by body: {num_body_filtered} emails")
+    print(f"Retrieving by body: {num_body_filtered} emails")
 
     try:
         genai.configure(api_key=os.environ['GEMINI_API_KEY'])
