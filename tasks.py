@@ -1,4 +1,4 @@
-from time import sleep
+import time
 # from celery_files.celeryconfig import celery
 from dotenv import load_dotenv
 import imaplib
@@ -7,6 +7,7 @@ import os
 import re
 from typing import List
 import google.generativeai as genai
+import google.api_core.exceptions
 from collections import defaultdict
 from bs4 import BeautifulSoup
 import urllib.parse
@@ -15,6 +16,36 @@ import time
 from datetime import datetime
 
 load_dotenv()
+
+class GenAIAPIClient:
+    def __init__(self, max_calls_per_minute: int = 15):
+        self.max_calls_per_minute = max_calls_per_minute
+        self.calls_made = 0
+        self.reset_time = time.time()
+        self.configure_genai()
+
+    def configure_genai(self):
+        genai.configure(api_key=os.environ['GEMINI_API_KEY'])
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
+
+    def generate_content(self, prompt_message: str) -> str:
+        if self.calls_made >= self.max_calls_per_minute:
+            self.wait_until_reset()
+        
+        try:
+            response = self.model.generate_content(prompt_message)
+            self.calls_made += 1
+            return response
+        except google.api_core.exceptions.ResourceExhausted:
+            self.wait_until_reset()
+            return self.generate_content(prompt_message)
+
+    def wait_until_reset(self):
+        elapsed_time = time.time() - self.reset_time
+        if elapsed_time < 60:
+            time.sleep(60 - elapsed_time)
+        self.made_calls = 0
+        self.reset_time = time.time()
 
 def filter_by_subject() -> List[str]:
     try:
@@ -37,7 +68,7 @@ def filter_by_subject() -> List[str]:
 
     print("Starting date ", formatted_date)
 
-    _, msgs = mail.uid('Search', None, f'SINCE "{formatted_date}"')
+    _, msgs = mail.uid('Search', None, f'SINCE "{formatted_date}" BEFORE "20-Aug-2024"')
     prompt_message = "Given these Ids and subjects of emails, return only and just the list of ids and their subjects and nothing else if the subject sounds related to an internship application "
     num_subject_filtered = 0
     for uid in msgs[0].split():
@@ -57,7 +88,7 @@ def filter_by_subject() -> List[str]:
         prompt_message += "Id: " + str(uid) + " Subject: " + str(subject) + "\n"
     
     mail.logout()
-    print(f"Retrieving by subject: {num_subject_filtered} emails")
+    print(f"Filtered by subject: {num_subject_filtered} emails")
 
     genai.configure(api_key=os.environ['GEMINI_API_KEY'])
     model = genai.GenerativeModel('gemini-1.5-flash')
@@ -105,7 +136,7 @@ def filter_by_body(uids: List[bytes]) -> dict[list]:
         prompt_message += body + f" URL: {url}, Timestamp: {timestamp}" + "\n\n"
     
     mail.logout()
-    print(f"Retrieving by body: {num_body_filtered} emails")
+    print(f"Filtered by body: {num_body_filtered} emails")
 
     try:
         genai.configure(api_key=os.environ['GEMINI_API_KEY'])
