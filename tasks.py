@@ -68,7 +68,7 @@ def filter_by_subject() -> List[str]:
 
     print("Starting date ", formatted_date)
 
-    _, msgs = mail.uid('Search', None, f'SINCE "{formatted_date}" BEFORE "20-Aug-2024"')
+    _, msgs = mail.uid('Search', None, f'SINCE "{formatted_date}"')
     prompt_message = "Given these Ids and subjects of emails, return only and just the list of ids and their subjects and nothing else if the subject sounds related to an internship application "
     num_subject_filtered = 0
     for uid in msgs[0].split():
