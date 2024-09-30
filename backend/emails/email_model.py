@@ -8,5 +8,4 @@ class Email(Base):
     internship_id = Column(Integer, ForeignKey('internships.id'))
     timestamp = Column(DateTime)
     url = Column(String, nullable=False)
-    confidence = Column(Integer)
     
